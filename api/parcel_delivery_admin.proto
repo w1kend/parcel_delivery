@@ -1,0 +1,25 @@
+syntax="proto3";
+
+package parcel_delivery_admin;
+
+service ParcelDeliveryAdmin {
+    // update order status
+    rpc UpdateOrderStatus(UpdateOrderStatusRequest) returns (UpdateOrderStatusResponse) {};
+    // list all orders
+    rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse) {};
+    // assign order to the courier
+    rpc AssignOrder(AssignOrderRequest) returns (AssignOrderResponse) {};
+    // create an account for the courier
+    rpc CreateCourierAccount(CreateCourierAccountRequest) returns (CreateCourierAccountResponse) {};
+    // get current order coordinates
+    rpc GetOrderCoordinates(GetOrderCoordinatesRequest) returns (GetOrderCoordinatesResponse) {};
+    // list all couriers
+    rpc ListCouriers(ListCouriersRequest) returns (ListCouriersResponse) {};
+}
+
+
+message UpdateOrderStatusRequest {
+
+}
+
+message UpdateOrderStatusResponse {}

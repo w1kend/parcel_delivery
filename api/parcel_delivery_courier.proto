@@ -1,0 +1,12 @@
+syntax="proto3";
+
+package parcel_delivery_courier;
+
+service ParcelDeliveryCourier {
+    // list all orders assigned to the courier
+    rpc ListOrders() returns () {};
+    // update order status
+    rpc UpdateOrderStatus() returns () {};
+    // get order information
+    rpc GetOrder() returns () {};
+}

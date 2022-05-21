@@ -1,0 +1,136 @@
+syntax="proto3";
+
+package parcel_delivery;
+option go_package="github.com/w1kend/guavapay_test/internal/pkg/api/parcel_delivery_grpc";
+
+service ParcelDelivery {
+    // create an account
+    rpc SignUp(SignUpRequest) returns (SignUpResponse) {};
+    // login
+    rpc SignIn(SignInRequest) returns (SignInResponse) {};
+
+
+    // create an order
+    rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {};
+    // change order destination
+    rpc ChangeDestination(ChangeDestinationRequest) returns (ChengeDestinationResponse) {};
+    // cancel an order
+    rpc CancelOrder(CancelOrderRequest) returns (CancelOrderResponse) {};
+    // get order information
+    rpc GetOrder(GetOrderRequest) returns (GetOrderResponse) {};
+    // get list of orders
+    rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse) {};
+}
+
+
+message SignUpRequest {
+    // user email
+    string email = 1;
+    // user password
+    string password = 2;
+}
+
+message SignUpResponse {
+    // auth token
+    string token = 1;
+}
+
+message SignInRequest {
+    // user email
+    string email = 1;
+    // user password
+    string password = 2;
+}
+
+message SignInResponse {
+    // auth token
+    string token = 1;
+}
+
+message CreateOrderRequest {
+    // from address
+    string from = 1;
+    // to address
+    string to = 2;
+    // sender name
+    string sender_name = 3;
+    // recipient name
+    string recipient_name = 4;
+    // package weight
+    uint64 weight = 5;
+}
+
+message CreateOrderResponse {
+    // order uuid
+    string uuid = 1;
+}
+
+message ChangeDestinationRequest {
+    // order uuid
+    string uuid = 1;
+    // new destination address
+    string new_destination = 2;
+    // reason for changing address
+    string reason = 3;
+}
+
+message ChengeDestinationResponse {}
+
+message CancelOrderRequest {
+    // order uuid
+    string uuid = 1;
+    // reason for cancelling order
+    string reason = 2;
+}
+
+message CancelOrderResponse {}
+
+message GetOrderRequest{
+    // order uuid
+    string uuid = 1;
+}
+
+message GetOrderResponse {
+    // from address
+    string from = 1;
+    // to address
+    string to = 2;
+    // sender name
+    string sender_name = 3;
+    // recipient name
+    string recipient_name = 4;
+    // package weight
+    int64 weight = 5;
+    // current status
+    string status = 6;
+    // created at
+    string created_at = 7;
+    // order price
+    uint64 price = 8;
+}
+
+message ListOrdersRequest{
+    // offset
+    uint32 offset = 1;
+    // limit
+    uint32 limit = 2;
+}
+
+message OrderShortInfo {
+    // order uuid
+    string uuid = 1;
+    // from address
+    string from = 2;
+    // to address
+    string to = 3;
+    // recipient name
+    string recipient_name = 4;
+    // current status
+    string status = 6;
+    // created at
+    string created_at = 7;
+}
+
+message ListOrdersResponse{
+    repeated OrderShortInfo orders = 1;
+}
