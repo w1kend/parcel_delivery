@@ -6,13 +6,16 @@ import (
 	"net"
 	"os"
 
-	"github.com/w1kend/guavapay_test/internal/app/parcel_delivery"
-	"github.com/w1kend/guavapay_test/internal/pkg/api/parcel_delivery_grpc"
+	_ "github.com/lib/pq"
+	"github.com/w1kend/parcel_delivery_test/internal/app/parcel_delivery"
+	"github.com/w1kend/parcel_delivery_test/internal/pkg/api/parcel_delivery_grpc"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 func main() {
 	grpcServer := grpc.NewServer()
+	reflection.Register(grpcServer)
 
 	db, err := sql.Open("postgres", getDbDsn())
 	if err != nil {

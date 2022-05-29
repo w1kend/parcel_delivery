@@ -9,14 +9,19 @@ package model
 
 import (
 	"github.com/google/uuid"
+	"time"
 )
 
 type Orders struct {
 	ID                uuid.UUID `sql:"primary_key"`
 	FromAddr          string
 	ToAddr            string
+	Status            OrderStatus
+	Price             int16
 	SenderName        string
 	SenderPassportNum string
 	RecipientName     string
 	Weight            int16
+	CreatedAt         time.Time
+	CreatedBy         uuid.UUID
 }

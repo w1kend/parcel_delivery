@@ -3,8 +3,8 @@ package parcel_delivery
 import (
 	"database/sql"
 
-	"github.com/w1kend/guavapay_test/internal/pkg/api/parcel_delivery_grpc"
-	"github.com/w1kend/guavapay_test/internal/repositories"
+	"github.com/w1kend/parcel_delivery_test/internal/pkg/api/parcel_delivery_grpc"
+	"github.com/w1kend/parcel_delivery_test/internal/repositories"
 )
 
 type Implementation struct {

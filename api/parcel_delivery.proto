@@ -1,7 +1,7 @@
 syntax="proto3";
 
 package parcel_delivery;
-option go_package="github.com/w1kend/guavapay_test/internal/pkg/api/parcel_delivery_grpc";
+option go_package="github.com/w1kend/parcel_delivery_test/internal/pkg/api/parcel_delivery_grpc";
 
 service ParcelDelivery {
     // create an account
@@ -54,10 +54,12 @@ message CreateOrderRequest {
     string to = 2;
     // sender name
     string sender_name = 3;
+    // sender identificator
+    string sender_passport_num = 4;
     // recipient name
-    string recipient_name = 4;
+    string recipient_name = 5;
     // package weight
-    uint64 weight = 5;
+    uint64 weight = 6;
 }
 
 message CreateOrderResponse {

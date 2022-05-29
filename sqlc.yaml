@@ -1,0 +1,8 @@
+version: "1"
+overrides:
+  - db_type: "uuid"
+    nullable: true
+    go_type:
+      import: "github.com/google/uuid"
+      type: "UUID"
+      pointer: true

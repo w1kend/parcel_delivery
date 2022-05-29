@@ -1,5 +1,5 @@
 services:
-  parcel_delivery_app:
+  app:
     build: .
     environment:
       - DB_USER=${DB_USER}
