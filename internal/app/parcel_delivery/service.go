@@ -1,20 +1,30 @@
 package parcel_delivery
 
 import (
-	"database/sql"
-
-	"github.com/w1kend/parcel_delivery_test/internal/pkg/api/parcel_delivery_grpc"
+	"github.com/w1kend/parcel_delivery_test/internal/pkg/auth"
 	"github.com/w1kend/parcel_delivery_test/internal/repositories"
+	"github.com/w1kend/parcel_delivery_test/pkg/parcel_delivery_grpc"
 )
 
 type Implementation struct {
 	parcel_delivery_grpc.UnimplementedParcelDeliveryServer
-	OrdersRepo repositories.Orders
+	OrdersRepo   repositories.Orders
+	UsersRepo    repositories.Users
+	Hasher       auth.Hasher
+	TokenManager auth.TokenManager
 }
 
-func NewImplementation(db *sql.DB) Implementation {
+func NewImplementation(
+	ordersRepo repositories.Orders,
+	usersRepo repositories.Users,
+	hasher auth.Hasher,
+	tokenManager auth.TokenManager,
+) Implementation {
 	return Implementation{
-		OrdersRepo: repositories.NewOrdersRepo(db),
+		OrdersRepo:   ordersRepo,
+		UsersRepo:    usersRepo,
+		Hasher:       hasher,
+		TokenManager: tokenManager,
 	}
 }
 

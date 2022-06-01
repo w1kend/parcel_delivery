@@ -7,7 +7,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/w1kend/parcel_delivery_test/internal/generated/parcel_delivery/public/model"
-	"github.com/w1kend/parcel_delivery_test/internal/pkg/api/parcel_delivery_grpc"
+	"github.com/w1kend/parcel_delivery_test/pkg/parcel_delivery_grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
