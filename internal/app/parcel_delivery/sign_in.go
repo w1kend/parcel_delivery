@@ -9,7 +9,6 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-// SignIn implements parcel_delivery.ParcelDeliveryServer
 func (i *Implementation) SignIn(ctx context.Context, req *parcel_delivery_grpc.SignInRequest) (*parcel_delivery_grpc.SignInResponse, error) {
 	//validation
 

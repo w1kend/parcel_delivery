@@ -24,4 +24,5 @@ type Orders struct {
 	Weight            int16
 	CreatedAt         time.Time
 	CreatedBy         uuid.UUID
+	CourierID         *uuid.UUID
 }

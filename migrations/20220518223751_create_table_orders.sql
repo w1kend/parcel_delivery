@@ -1,6 +1,12 @@
 -- +goose Up
 -- +goose StatementBegin
-create type order_status as enum ('new', 'accepted', 'in_proccess', 'delivered');
+create type order_status as enum (
+    'new',
+    'accepted',
+    'in_proccess',
+    'delivered',
+    'calcelled'
+);
 create table orders(
     id uuid primary key,
     from_addr text not null,
@@ -12,7 +18,8 @@ create table orders(
     recipient_name text not null,
     weight smallint not null,
     created_at timestamptz not null default now(),
-    created_by uuid not null
+    created_by uuid not null references users(id),
+    courier_id uuid references users(id)
 );
 create index orders_sender_passport_num_idx on orders using btree(sender_passport_num);
 -- +goose StatementEnd

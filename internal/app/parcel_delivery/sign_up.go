@@ -13,7 +13,6 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-// SignUp implements parcel_delivery.ParcelDeliveryServer
 func (i *Implementation) SignUp(ctx context.Context, req *parcel_delivery_grpc.SignUpRequest) (*parcel_delivery_grpc.SignUpResponse, error) {
 	//validation
 
@@ -25,6 +24,7 @@ func (i *Implementation) SignUp(ctx context.Context, req *parcel_delivery_grpc.S
 		ID:        uuid.New(),
 		Name:      "user_name",
 		Email:     req.GetEmail(),
+		Role:      model.UserRole_Client,
 		Password:  hashedPassword,
 		CreatedAt: time.Now(),
 	}

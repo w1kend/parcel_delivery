@@ -14,9 +14,11 @@ var OrderStatus = &struct {
 	Accepted   postgres.StringExpression
 	InProccess postgres.StringExpression
 	Delivered  postgres.StringExpression
+	Calcelled  postgres.StringExpression
 }{
 	New:        postgres.NewEnumValue("new"),
 	Accepted:   postgres.NewEnumValue("accepted"),
 	InProccess: postgres.NewEnumValue("in_proccess"),
 	Delivered:  postgres.NewEnumValue("delivered"),
+	Calcelled:  postgres.NewEnumValue("calcelled"),
 }

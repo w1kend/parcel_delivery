@@ -28,6 +28,7 @@ type ordersTable struct {
 	Weight            postgres.ColumnInteger
 	CreatedAt         postgres.ColumnTimestampz
 	CreatedBy         postgres.ColumnString
+	CourierID         postgres.ColumnString
 
 	AllColumns     postgres.ColumnList
 	MutableColumns postgres.ColumnList
@@ -79,8 +80,9 @@ func newOrdersTableImpl(schemaName, tableName, alias string) ordersTable {
 		WeightColumn            = postgres.IntegerColumn("weight")
 		CreatedAtColumn         = postgres.TimestampzColumn("created_at")
 		CreatedByColumn         = postgres.StringColumn("created_by")
-		allColumns              = postgres.ColumnList{IDColumn, FromAddrColumn, ToAddrColumn, StatusColumn, PriceColumn, SenderNameColumn, SenderPassportNumColumn, RecipientNameColumn, WeightColumn, CreatedAtColumn, CreatedByColumn}
-		mutableColumns          = postgres.ColumnList{FromAddrColumn, ToAddrColumn, StatusColumn, PriceColumn, SenderNameColumn, SenderPassportNumColumn, RecipientNameColumn, WeightColumn, CreatedAtColumn, CreatedByColumn}
+		CourierIDColumn         = postgres.StringColumn("courier_id")
+		allColumns              = postgres.ColumnList{IDColumn, FromAddrColumn, ToAddrColumn, StatusColumn, PriceColumn, SenderNameColumn, SenderPassportNumColumn, RecipientNameColumn, WeightColumn, CreatedAtColumn, CreatedByColumn, CourierIDColumn}
+		mutableColumns          = postgres.ColumnList{FromAddrColumn, ToAddrColumn, StatusColumn, PriceColumn, SenderNameColumn, SenderPassportNumColumn, RecipientNameColumn, WeightColumn, CreatedAtColumn, CreatedByColumn, CourierIDColumn}
 	)
 
 	return ordersTable{
@@ -98,6 +100,7 @@ func newOrdersTableImpl(schemaName, tableName, alias string) ordersTable {
 		Weight:            WeightColumn,
 		CreatedAt:         CreatedAtColumn,
 		CreatedBy:         CreatedByColumn,
+		CourierID:         CourierIDColumn,
 
 		AllColumns:     allColumns,
 		MutableColumns: mutableColumns,

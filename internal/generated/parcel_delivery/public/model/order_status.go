@@ -16,6 +16,7 @@ const (
 	OrderStatus_Accepted   OrderStatus = "accepted"
 	OrderStatus_InProccess OrderStatus = "in_proccess"
 	OrderStatus_Delivered  OrderStatus = "delivered"
+	OrderStatus_Calcelled  OrderStatus = "calcelled"
 )
 
 func (e *OrderStatus) Scan(value interface{}) error {
@@ -38,6 +39,8 @@ func (e *OrderStatus) Scan(value interface{}) error {
 		*e = OrderStatus_InProccess
 	case "delivered":
 		*e = OrderStatus_Delivered
+	case "calcelled":
+		*e = OrderStatus_Calcelled
 	default:
 		return errors.New("jet: Invalid scan value '" + enumValue + "' for OrderStatus enum")
 	}

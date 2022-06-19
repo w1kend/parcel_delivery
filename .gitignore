@@ -1,3 +1,4 @@
 .vscode
 pg_data
 test
+env.local

@@ -31,13 +31,14 @@ func NewUsersRepository(db *sql.DB) DBUsers {
 	}
 }
 
-// CreateUser implements Users
+// CreateUser - creates user
 func (d DBUsers) CreateUser(ctx context.Context, user model.Users) error {
 	stmt := table.Users.
 		INSERT(
 			table.Users.ID,
 			table.Users.Name,
 			table.Users.Email,
+			table.Users.Role,
 			table.Users.Password,
 			table.Users.CreatedAt,
 		).MODEL(user)
@@ -46,7 +47,7 @@ func (d DBUsers) CreateUser(ctx context.Context, user model.Users) error {
 	return err
 }
 
-// GetByEmailAndPassword implements Users
+// GetByEmail - returns user with specified email
 func (d DBUsers) GetByEmail(ctx context.Context, email string) (*model.Users, error) {
 	stmt := table.Users.
 		SELECT(table.Users.AllColumns).

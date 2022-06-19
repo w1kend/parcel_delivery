@@ -9,7 +9,10 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-const authMetadataName = "authorization"
+const (
+	authMetadataName = "authorization"
+	CtxUserInfo      = "user"
+)
 
 type AuthInterceptor struct {
 	tokenManager TokenManager
@@ -30,7 +33,7 @@ func (i AuthInterceptor) Unary() grpc.UnaryServerInterceptor {
 		info *grpc.UnaryServerInfo,
 		handler grpc.UnaryHandler,
 	) (resp interface{}, err error) {
-		err = i.authorize(ctx, info.FullMethod)
+		ctx, err = i.authorize(ctx, info.FullMethod)
 		if err != nil {
 			return nil, err
 		}
@@ -39,30 +42,35 @@ func (i AuthInterceptor) Unary() grpc.UnaryServerInterceptor {
 	}
 }
 
-func (i AuthInterceptor) authorize(ctx context.Context, method string) error {
+func (i AuthInterceptor) authorize(ctx context.Context, method string) (context.Context, error) {
 	if _, noAuth := i.whiteList[method]; noAuth {
-		return nil
+		return ctx, nil
 	}
 
 	md, exists := metadata.FromIncomingContext(ctx)
 	if !exists {
-		return status.Error(codes.Unauthenticated, "there is no metadata")
+		return ctx, status.Error(codes.Unauthenticated, "there is no metadata")
 	}
 
 	values := md.Get(authMetadataName)
 	if len(values) == 0 {
-		return status.Error(codes.Unauthenticated, "there is no authorization metadata")
+		return ctx, status.Error(codes.Unauthenticated, "there is no authorization metadata")
 	}
 
 	tokenStr := values[0]
 	claims, err := i.tokenManager.Parse(tokenStr)
 	if err != nil {
-		return status.Error(codes.Unauthenticated, "failed to parse token")
+		return ctx, status.Error(codes.Unauthenticated, "failed to parse token")
 	}
 
 	if claims.Valid() != nil {
-		return status.Error(codes.Unauthenticated, "token is not valid")
+		return ctx, status.Error(codes.Unauthenticated, "token is not valid")
 	}
 
-	return nil
+	ctx = context.WithValue(ctx, CtxUserInfo, UserInfo{
+		UserID: claims.UserID,
+		Role:   claims.Role,
+	})
+
+	return ctx, nil
 }
