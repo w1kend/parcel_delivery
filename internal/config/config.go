@@ -1,26 +1,85 @@
 package config
 
 import (
+	"sync"
+
 	"github.com/caarlos0/env/v6"
 )
 
-type Config struct {
-	DBHost     string `env:"DB_HOST,notEmpty"`
-	DBUser     string `env:"DB_USER,notEmpty"`
-	DBPassword string `env:"DB_PASSWORD,notEmpty"`
-	DBName     string `env:"DB_NAME,notEmpty"`
-	DBPort     string `env:"DB_PORT,notEmpty"`
-	JWTSecret  string `env:"JWT_SECRET,notEmpty"`
-	HashCost   int    `env:"HASH_COST,notEmpty"`
-	AppPort    string `env:"APP_PORT,notEmpty"`
+type config struct {
+	Pgdsn           string `env:"PG_DSN,notEmpty"`
+	JwtSecret       string `env:"JWT_SECRET,notEmpty"`
+	AppPort         string `env:"APP_PORT,notEmpty"`
+	PgMaxOpenConns  int    `env:"PG_MAX_OPEN_CONNS" envDefault:"20"`
+	PgMaxIddleConns int    `env:"PG_MAX_IDLE_CONNS" envDefault:"20"`
+
+	values map[string]value
 }
 
-func BuildConfig() Config {
-	var cfg Config
-	err := env.Parse(&cfg)
-	if err != nil {
-		panic(err)
+var (
+	cfg  config
+	once = sync.Once{}
+	mu   sync.RWMutex
+)
+
+const (
+	PgDsn           = "pgdsn"
+	PgMaxOpenConns  = "pg_max_open_conns"
+	PgMaxIddleConns = "pg_max_idle_conns"
+	JWTSecret       = "jwt_secret"
+	AppPort         = "app_port"
+)
+
+type value struct {
+	source interface{}
+}
+
+func (v value) Int() int {
+	if i, ok := v.source.(int); ok {
+		return i
 	}
 
-	return cfg
+	return 0
+}
+
+func (v value) String() string {
+	if s, ok := v.source.(string); ok {
+		return s
+	}
+
+	return ""
+}
+
+func buildConfig() {
+	once.Do(func() {
+		mu.Lock()
+		defer mu.Unlock()
+
+		var c config
+
+		err := env.Parse(&c)
+		if err != nil {
+			panic("failed to init config: " + err.Error())
+		}
+
+		c.values = map[string]value{
+			PgDsn:           {source: c.Pgdsn},
+			JWTSecret:       {source: c.JwtSecret},
+			AppPort:         {source: c.AppPort},
+			PgMaxIddleConns: {source: c.PgMaxIddleConns},
+			PgMaxOpenConns:  {source: c.PgMaxOpenConns},
+		}
+
+		cfg = c
+	})
+}
+
+func init() {
+	buildConfig()
+}
+
+func GetValue(name string) value {
+	mu.RLock()
+	defer mu.RUnlock()
+	return cfg.values[name]
 }

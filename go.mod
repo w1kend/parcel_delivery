@@ -1,4 +1,4 @@
-module github.com/w1kend/parcel_delivery_test
+module github.com/w1kend/parcel_delivery
 
 go 1.18
 

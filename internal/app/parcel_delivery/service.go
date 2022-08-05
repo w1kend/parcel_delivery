@@ -1,9 +1,9 @@
 package parcel_delivery
 
 import (
-	"github.com/w1kend/parcel_delivery_test/internal/pkg/auth"
-	"github.com/w1kend/parcel_delivery_test/internal/pkg/repositories"
-	"github.com/w1kend/parcel_delivery_test/pkg/parcel_delivery_grpc"
+	"github.com/w1kend/parcel_delivery/internal/pkg/auth"
+	"github.com/w1kend/parcel_delivery/internal/pkg/repositories"
+	"github.com/w1kend/parcel_delivery/pkg/parcel_delivery_grpc"
 )
 
 type Implementation struct {

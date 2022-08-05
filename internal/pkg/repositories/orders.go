@@ -7,8 +7,8 @@ import (
 	"github.com/go-jet/jet/v2/postgres"
 	"github.com/go-jet/jet/v2/qrm"
 	"github.com/pkg/errors"
-	"github.com/w1kend/parcel_delivery_test/internal/generated/parcel_delivery/public/model"
-	"github.com/w1kend/parcel_delivery_test/internal/generated/parcel_delivery/public/table"
+	"github.com/w1kend/parcel_delivery/internal/generated/parcel_delivery/public/model"
+	"github.com/w1kend/parcel_delivery/internal/generated/parcel_delivery/public/table"
 )
 
 type Orders interface {

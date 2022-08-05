@@ -3,7 +3,7 @@ package repositories
 import (
 	"github.com/go-jet/jet/v2/postgres"
 	"github.com/pkg/errors"
-	"github.com/w1kend/parcel_delivery_test/internal/generated/parcel_delivery/public/table"
+	"github.com/w1kend/parcel_delivery/internal/generated/parcel_delivery/public/table"
 )
 
 // OrdersFilter - filter for orders repository

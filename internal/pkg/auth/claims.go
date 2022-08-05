@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt"
-	"github.com/w1kend/parcel_delivery_test/internal/generated/parcel_delivery/public/model"
+	"github.com/w1kend/parcel_delivery/internal/generated/parcel_delivery/public/model"
 )
 
 const (

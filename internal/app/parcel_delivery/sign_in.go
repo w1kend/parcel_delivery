@@ -3,8 +3,8 @@ package parcel_delivery
 import (
 	context "context"
 
-	"github.com/w1kend/parcel_delivery_test/internal/pkg/auth"
-	"github.com/w1kend/parcel_delivery_test/pkg/parcel_delivery_grpc"
+	"github.com/w1kend/parcel_delivery/internal/pkg/auth"
+	"github.com/w1kend/parcel_delivery/pkg/parcel_delivery_grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

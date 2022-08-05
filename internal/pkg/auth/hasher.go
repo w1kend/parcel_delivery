@@ -6,19 +6,16 @@ import (
 
 //
 type Hasher struct {
-	cost int
 }
 
 //
-func NewHasher(cost int) Hasher {
-	return Hasher{
-		cost: cost,
-	}
+func NewHasher() Hasher {
+	return Hasher{}
 }
 
 //
 func (h Hasher) Hash(password string) (string, error) {
-	hashed, err := bcrypt.GenerateFromPassword([]byte(password), h.cost)
+	hashed, err := bcrypt.GenerateFromPassword([]byte(password), 12)
 	if err != nil {
 		return "", err
 	}
