@@ -2,10 +2,12 @@ package config
 
 import (
 	"database/sql"
+	"fmt"
 	"sync"
 	"testing"
 
 	"github.com/pkg/errors"
+	"github.com/w1kend/parcel_delivery/internal/pkg/health"
 )
 
 func NewPostgres() (*sql.DB, error) {
@@ -47,4 +49,26 @@ func NewTestPostgres(t *testing.T) *sql.DB {
 	testMux.RLock()
 	defer testMux.RUnlock()
 	return &testPg
+}
+
+func PgHealthChecker(conn *sql.DB) health.CheckFn {
+	return func() health.State {
+		if conn == nil {
+			return health.State{
+				Status:      health.StatusWarn,
+				Description: "can't check postgress connection",
+			}
+		}
+		if err := conn.Ping(); err != nil {
+			return health.State{
+				Status:      health.StatusCrit,
+				Description: fmt.Sprintf("ping to postgress: %s", err.Error()),
+			}
+		}
+
+		return health.State{
+			Status:      health.StatusOK,
+			Description: "OK",
+		}
+	}
 }
